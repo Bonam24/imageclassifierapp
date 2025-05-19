@@ -4,6 +4,8 @@ from PIL import Image
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 # Models to use
 MODEL_INFO = {
     "vgg19": ("models/vgg19_model.keras", 224),
