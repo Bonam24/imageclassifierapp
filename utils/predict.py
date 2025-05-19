@@ -1,21 +1,23 @@
-# utils/predict.py
-
 import os
+from flask import render_template, request, url_for
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 import numpy as np
 from PIL import Image
+from werkzeug.utils import secure_filename
 
-# Model info
+# Upload folder setup
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# Only include required models
 MODEL_INFO = {
-    "vgg16": ("models/vgg16_model.keras", 224),
     "vgg19": ("models/vgg19_model.keras", 224),
     "resnet": ("models/resnet50_model.keras", 224),
     "inception": ("models/inceptionv3_model.keras", 299),
-    "efficientnet": ("models/efficientnetb0_model.keras", 224),
 }
 
-def load_all_models():
+def load_selected_models():
     models = {}
     for name, (path, size) in MODEL_INFO.items():
         models[name] = {
