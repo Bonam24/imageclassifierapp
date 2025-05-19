@@ -1,7 +1,9 @@
 from flask import Flask, request, render_template
 from utils.predict import load_all_models, predict_image
+import os
 
 app = Flask(__name__)
+
 
 # Load models once on startup
 models = load_all_models()
@@ -24,5 +26,10 @@ def predict():
     
     return render_template("index.html", prediction=prediction)
 
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
+# //added code 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host="0.0.0.0", port=port)
